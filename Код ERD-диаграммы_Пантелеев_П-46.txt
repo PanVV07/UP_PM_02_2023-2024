@@ -1,0 +1,42 @@
+--------------------------(Код создания БД)----------------------------------------------
+CREATE DATABASE BD_MZK
+
+-------------------(Код создания таблиц и связей в БД)-----------------------------------
+USE BD_MZK
+CREATE TABLE ZAMETKA
+(
+Kod_zametki INT PRIMARY KEY,
+Nazvanie_zametki VARCHAR(250) NOT NULL,
+Data_zametki DATE NOT NULL,
+)
+CREATE TABLE KONTAKT
+(
+Kod_kontakta INT PRIMARY KEY,
+FIO VARCHAR(250) NOT NULL,
+Telefon VARCHAR(250) NOT NULL,
+email VARCHAR(250) NOT NULL,
+Kod_zametki INT FOREIGN KEY REFERENCES ZAMETKA(Kod_zametki),
+)
+CREATE TABLE GRUPPA
+(
+Kod_gruppi INT PRIMARY KEY,
+Nazvanie_gruppi VARCHAR(250) NOT NULL,
+Kod_kontakta INT FOREIGN KEY REFERENCES KONTAKT(Kod_kontakta),
+)
+CREATE TABLE SOBITIE
+(
+Kod_sobitiya INT PRIMARY KEY,
+Sobitie VARCHAR(250) NOT NULL,
+Data DATE NOT NULL,
+Kod_kontakta INT FOREIGN KEY REFERENCES KONTAKT(Kod_kontakta),
+Kod_gruppi INT FOREIGN KEY REFERENCES GRUPPA(Kod_gruppi),
+)
+CREATE TABLE MOYA_ZAPISNAYA_KNIGA
+(
+Kod_knigi INT PRIMARY KEY,
+Nazvanie VARCHAR(250) NOT NULL,
+Kod_kontakta INT FOREIGN KEY REFERENCES KONTAKT(Kod_kontakta),
+Kod_gruppi INT FOREIGN KEY REFERENCES GRUPPA(Kod_gruppi),
+Kod_zametki INT FOREIGN KEY REFERENCES ZAMETKA(Kod_zametki),
+Kod_sobitiya INT FOREIGN KEY REFERENCES SOBITIE(Kod_sobitiya),
+)
